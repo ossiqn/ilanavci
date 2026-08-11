@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IlanAvci by OSSIQN</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="titlebar" id="titlebar">
+    <div class="titlebar-drag">
+      <div class="titlebar-brand">
+        <svg class="brand-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+          <path d="M11 8v6M8 11h6"/>
+        </svg>
+        <span class="brand-name">IlanAvci</span>
+        <span class="brand-author" id="brandAuthor">OSSIQN</span>
+      </div>
+    </div>
+
+    <div class="titlebar-center" id="scanIndicator">
+      <div class="scan-dot" id="scanDot"></div>
+      <span class="scan-label" id="scanLabel">Hazir</span>
+      <button class="scan-toggle" id="btnSchedToggle" title="Otomatik taramayi durdur/baslat">
+        <svg id="schedIcon" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="6" y="4" width="4" height="16"/>
+          <rect x="14" y="4" width="4" height="16"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="titlebar-links">
+      <button class="tb-link" id="btnGithub" title="Github">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.04-3.34.72-4.04-1.61-4.04-1.61-.54-1.39-1.33-1.76-1.33-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.83 1.24 1.83 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.81 1.1.81 2.22 0 1.61-.01 2.9-.01 3.29 0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        <span>Github</span>
+      </button>
+      <button class="tb-link" id="btnR10" title="R10 Profil">
+        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+        <span>R10</span>
+      </button>
+    </div>
+
+    <div class="titlebar-actions">
+      <button class="tb-btn" id="btnMin" aria-label="Minimize">
+        <svg viewBox="0 0 12 12" width="12" height="12"><path d="M2 6h8" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+      <button class="tb-btn" id="btnMax" aria-label="Maximize">
+        <svg viewBox="0 0 12 12" width="12" height="12"><rect x="2" y="2" width="8" height="8" rx="1" stroke="currentColor" stroke-width="1.2" fill="none"/></svg>
+      </button>
+      <button class="tb-btn tb-close" id="btnClose" aria-label="Close">
+        <svg viewBox="0 0 12 12" width="12" height="12"><path d="M3 3l6 6M9 3l-6 6" stroke="currentColor" stroke-width="1.5"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" id="sidebar">
+      <div class="nav-group">
+        <button class="nav-btn active" data-page="dashboard">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-btn" data-page="watchers">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+          <span>Takipciler</span>
+        </button>
+        <button class="nav-btn" data-page="alerts">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/>
+          </svg>
+          <span>Alarmlar</span>
+          <span class="badge hidden" id="alertBadge">0</span>
+        </button>
+        <button class="nav-btn" data-page="listings">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/>
+          </svg>
+          <span>Ilanlar</span>
+        </button>
+        <button class="nav-btn" data-page="sellers">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/>
+          </svg>
+          <span>Saticilar</span>
+        </button>
+      </div>
+
+      <div class="nav-group nav-footer">
+        <button class="nav-btn" data-page="settings">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
+          </svg>
+          <span>Ayarlar</span>
+        </button>
+
+        <div class="footer-credit">
+          <span class="footer-by">by</span>
+          <span class="footer-name" id="footerCreditBtn">OSSIQN</span>
+        </div>
+      </div>
+    </nav>
+
+    <main class="main" id="main">
+
+      <section class="page active" id="page-dashboard">
+        <div class="page-top">
+          <div class="page-title">
+            <h1>Dashboard</h1>
+            <p class="page-desc">Otomatik tarama aktif - anlik izleme</p>
+          </div>
+        </div>
+        <div class="metrics" id="metricsGrid"></div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><h3>Son Alarmlar</h3></div>
+            <div class="card-body scroll-y" id="dashAlerts"><div class="empty-box">Henuz alarm olusturulmadi</div></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3>Fiyat Dususleri</h3></div>
+            <div class="card-body scroll-y" id="dashDrops"><div class="empty-box">Fiyat degisimi tespit edilmedi</div></div>
+          </div>
+        </div>
+        <div class="card mt-16">
+          <div class="card-head"><h3>Son Bulunan Ilanlar</h3></div>
+          <div class="card-body scroll-y" id="dashListings"><div class="empty-box">Henuz ilan bulunamadi</div></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-watchers">
+        <div class="page-top">
+          <div class="page-title">
+            <h1>Takipciler</h1>
+            <p class="page-desc">Ilan takip kurallari</p>
+          </div>
+          <button class="btn primary" id="btnAddWatcher">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Yeni Takip</span>
+          </button>
+        </div>
+        <div id="watcherList">
+          <div class="empty-box">
+            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.3"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <p>Henuz takipci eklenmedi</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="page-alerts">
+        <div class="page-top">
+          <div class="page-title"><h1>Alarmlar</h1></div>
+          <div class="toolbar">
+            <select class="input sm" id="alertFilterType">
+              <option value="">Tumu</option>
+              <option value="unread">Okunmamis</option>
+              <option value="high">Yuksek Oncelik</option>
+              <option value="price_drop">Fiyat Dususu</option>
+              <option value="price_anomaly">Fiyat Anomalisi</option>
+              <option value="new_listing">Yeni Ilan</option>
+            </select>
+            <button class="btn ghost sm" id="btnMarkAllRead">Tumunu Oku</button>
+          </div>
+        </div>
+        <div id="alertList"><div class="empty-box">Alarm bulunamadi</div></div>
+      </section>
+
+      <section class="page" id="page-listings">
+        <div class="page-top">
+          <div class="page-title"><h1>Ilan Gecmisi</h1></div>
+          <div class="toolbar">
+            <input type="text" class="input sm" id="listingSearch" placeholder="Ilan ara...">
+            <select class="input sm" id="listingPlatform"><option value="">Tum Platformlar</option><option value="r10">R10.net</option></select>
+            <select class="input sm" id="listingSort">
+              <option value="newest">En Yeni</option><option value="oldest">En Eski</option>
+              <option value="price_asc">Fiyat (Artan)</option><option value="price_desc">Fiyat (Azalan)</option>
+            </select>
+          </div>
+        </div>
+        <div id="listingList"><div class="empty-box">Ilan gecmisi bos</div></div>
+      </section>
+
+      <section class="page" id="page-sellers">
+        <div class="page-top">
+          <div class="page-title">
+            <h1>Satici Analizi</h1>
+            <p class="page-desc">Satici gecmisi ve itibar kontrolu</p>
+          </div>
+          <div class="toolbar">
+            <input type="text" class="input" id="sellerSearchInput" placeholder="Satici adi girin...">
+            <button class="btn primary sm" id="btnSearchSeller">Ara</button>
+          </div>
+        </div>
+        <div id="sellerContent"><div class="empty-box">Satici adi girerek gecmisini inceleyin</div></div>
+      </section>
+
+      <section class="page" id="page-settings">
+        <div class="page-top">
+          <div class="page-title"><h1>Ayarlar</h1></div>
+        </div>
+        <div class="settings-wrap">
+          <div class="card">
+            <div class="card-head"><h3>Bildirimler</h3></div>
+            <div class="card-body">
+              <div class="field-row">
+                <label>Masaustu bildirimleri</label>
+                <label class="toggle"><input type="checkbox" id="sDesktop" checked><span class="toggle-track"></span></label>
+              </div>
+              <div class="field-row">
+                <label>Bildirim sesi</label>
+                <label class="toggle"><input type="checkbox" id="sSound" checked><span class="toggle-track"></span></label>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <h3>Telegram Bildirimi</h3>
+              <span class="card-hint">Bot token girip test edin, otomatik calisir</span>
+            </div>
+            <div class="card-body">
+              <div class="field">
+                <label>Bot Token</label>
+                <input type="text" class="input" id="sTgToken" placeholder="123456:ABCdefGHIjklMNO...">
+                <span class="field-hint">@BotFather uzerinden bot olusturup token alabilirsiniz</span>
+              </div>
+              <div class="field">
+                <label>Chat ID</label>
+                <input type="text" class="input" id="sTgChat" placeholder="123456789">
+                <span class="field-hint">@userinfobot uzerinden chat ID ogrenebilirsiniz</span>
+              </div>
+              <div class="tg-actions">
+                <button class="btn primary sm" id="btnTgTest">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                  <span>Test Gonder</span>
+                </button>
+                <span class="tg-status" id="tgStatus"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>Tarama Ayarlari</h3></div>
+            <div class="card-body">
+              <div class="field">
+                <label>Tarama araligi (dakika)</label>
+                <input type="number" class="input" id="sInterval" value="5" min="1" max="120">
+                <span class="field-hint">Kayit sonrasi programi yeniden baslatin</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn primary" id="btnSaveSettings">Kaydet</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <div class="modal">
+      <div class="modal-head">
+        <h2>Yeni Takip Olustur</h2>
+        <button class="modal-x" id="btnCloseModal">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <label>Takip Adi</label>
+          <input type="text" class="input" id="mName" placeholder="Orn: Domain Firsatlari">
+        </div>
+        <div class="field">
+          <label>Platform</label>
+          <select class="input" id="mPlatform"><option value="r10">R10.net</option></select>
+        </div>
+        <div class="field">
+          <label>Anahtar Kelimeler</label>
+          <input type="text" class="input" id="mKeywords" placeholder="domain, .com, satilik">
+          <span class="field-hint">Virgul ile ayirin</span>
+        </div>
+        <div class="field">
+          <label>Haric Tut</label>
+          <input type="text" class="input" id="mExclude" placeholder="kiralik, takas">
+        </div>
+        <div class="field-row-2">
+          <div class="field"><label>Min Fiyat (TL)</label><input type="number" class="input" id="mMinPrice" value="0"></div>
+          <div class="field"><label>Max Fiyat (TL)</label><input type="number" class="input" id="mMaxPrice" value="999999"></div>
+        </div>
+        <div class="field">
+          <label>Kategori</label>
+          <select class="input" id="mCategory">
+            <option value="">Tumu</option><option value="domain">Domain</option>
+            <option value="site">Site</option><option value="hosting">Hosting</option>
+            <option value="yazilim">Yazilim</option><option value="sosyal-medya">Sosyal Medya</option>
+            <option value="seo">SEO</option><option value="grafik">Grafik</option>
+          </select>
+        </div>
+        <div class="field-row">
+          <label>Telegram bildirimi gonder</label>
+          <label class="toggle"><input type="checkbox" id="mTelegram"><span class="toggle-track"></span></label>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn ghost" id="btnCancelModal">Iptal</button>
+        <button class="btn primary" id="btnCreateWatcher">Takibi Baslat</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="sellerModalBackdrop">
+    <div class="modal modal-wide">
+      <div class="modal-head">
+        <h2 id="sellerModalTitle">Satici Gecmisi</h2>
+        <button class="modal-x" id="btnCloseSellerModal">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="sellerModalBody"></div>
+    </div>
+  </div>
+
+  <div class="credit-splash hidden" id="creditSplash">
+    <div class="credit-card">
+      <div class="credit-logo">
+        <svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="currentColor" stroke-width="1.8">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/><path d="M11 8v6M8 11h6"/>
+        </svg>
+      </div>
+      <h1 class="credit-title">IlanAvci</h1>
+      <p class="credit-sub">by <span id="creditAuthor">OSSIQN</span></p>
+      <p class="credit-msg" id="creditMsg">Bu yazilim OSSIQN tarafindan kodlanmistir. Satisi yasaktir, ucretsiz olarak yayinlanmistir.</p>
+      <div class="credit-links">
+        <button class="credit-link" id="creditGithub">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.04-3.34.72-4.04-1.61-4.04-1.61-.54-1.39-1.33-1.76-1.33-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.83 1.24 1.83 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.77.42-1.3.76-1.6-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 016 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.81 1.1.81 2.22 0 1.61-.01 2.9-.01 3.29 0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>Github</span>
+        </button>
+        <button class="credit-link" id="creditR10">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg>
+          <span>R10 Profil</span>
+        </button>
+      </div>
+      <button class="credit-close" id="creditClose">Devam Et</button>
+    </div>
+  </div>
+
+  <audio id="soundHigh" preload="auto"></audio>
+  <audio id="soundMedium" preload="auto"></audio>
+  <audio id="soundInfo" preload="auto"></audio>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

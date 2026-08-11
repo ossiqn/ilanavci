@@ -1,0 +1,22 @@
+{
+  "name": "ilanavci",
+  "version": "1.0.0",
+  "description": "Ilan takip ve firsat yakalama araci",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron . --disable-gpu --no-sandbox",
+    "postinstall": "electron-rebuild -f -w better-sqlite3",
+    "build": "electron-builder"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "cheerio": "^1.0.0-rc.12",
+    "electron-store": "^8.1.0",
+    "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^3.6.0",
+    "electron": "^28.3.3",
+    "electron-builder": "^24.13.3"
+  }
+}
